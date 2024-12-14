@@ -18,9 +18,7 @@
             font-family: Arial, sans-serif;
             transition: background-color 0.3s, color 0.3s;
             overflow: hidden;
-         
         }
-
 
         body.light-mode {
             background-color: var(--background-light);
@@ -114,43 +112,59 @@
     </style>
 </head>
 <body class="light-mode">
-    <div class="container">
-        <button class="theme-toggle" onclick="toggleTheme()">☀</button>
-        <h1>Wylosuj numerek szczęśliwca</h1>
-        <p>Wpisz wpisz pierwszy i ostatni numerek i kliknij losuj:</p>
-        <input type="number" id="min" placeholder="Pierwszy numerek">
-        <input type="number" id="max" placeholder="Ostatni numerek">
-        <button onclick="pickNumber()">Losuj numerek</button>
-        <div id="output" class="output"></div>
-    </div>
-    <div class="footer">
-        ciekawe kto ma numerek 6 hehe
-    </div>
+<div class="container">
+    <button class="theme-toggle" onclick="toggleTheme()">☀</button>
+    <h1>Wylosuj numerek szczęśliwca</h1>
+    <p>Wpisz wpisz pierwszy i ostatni numerek i kliknij losuj:</p>
+    <input type="number" id="min" placeholder="Pierwszy numerek">
+    <input type="number" id="max" placeholder="Ostatni numerek">
+    <button onclick="pickNumber()">Losuj numerek</button>
+    <div id="output" class="output"></div>
+</div>
+<div class="footer">
+    ciekawe kto ma numerek 6 hehe
+</div>
 
-    <script>
-        function pickNumber() {
-            const min = parseInt(document.getElementById('min').value);
-            const max = parseInt(document.getElementById('max').value);
+<script>
+    let clickCount = 0;
+    const messages = [
+        'Do tablicy idzie osoba z numerem: 6',
+        'O, a kto by się spodziewał, że znowu wypadł: 6!',
+        'O jaka szkoda, znowu nr: 6!',
+        'Czy to nie dziwne? Znów nr 6!',
+        'Ha! Kto by pomyślał, 6 znowu rządzi!',
+        'Hahaha, serio? To już nudne. Zgadnij co? 6!',
+        'Dobra, już przestań. 6 na zawsze!'
+    ];
 
-            if (isNaN(min) || isNaN(max) || min > max) {
-                document.getElementById('output').textContent = 'Please enter a valid range.';
-                return;
-            }
+    function pickNumber() {
+        const min = parseInt(document.getElementById('min').value);
+        const max = parseInt(document.getElementById('max').value);
 
-            // Always rig the result to be 6
-            const result = 6;
-            document.getElementById('output').textContent = `Do tablicy idzie osoba z numerem: ${result}`;
+        if (isNaN(min) || isNaN(max) || min > max) {
+            document.getElementById('output').textContent = 'Please enter a valid range.';
+            return;
         }
 
-        function toggleTheme() {
-            const body = document.body;
-            const isLight = body.classList.contains('light-mode');
-            body.classList.toggle('light-mode', !isLight);
-            body.classList.toggle('dark-mode', isLight);
-        }
+        // Always rig the result to be 6
+        const result = 6;
+        const message = messages[clickCount] || messages[messages.length - 1];
 
-        // Default to light mode
-        document.body.classList.add('light-mode');
-    </script>
+        document.getElementById('output').textContent = message;
+
+        // Increment click count
+        clickCount++;
+    }
+
+    function toggleTheme() {
+        const body = document.body;
+        const isLight = body.classList.contains('light-mode');
+        body.classList.toggle('light-mode', !isLight);
+        body.classList.toggle('dark-mode', isLight);
+    }
+
+    // Default to light mode
+    document.body.classList.add('light-mode');
+</script>
 </body>
 </html>
